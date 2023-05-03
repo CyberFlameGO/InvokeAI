@@ -25,13 +25,13 @@ import { receivedOpenAPISchema } from 'services/thunks/schema';
 
 type SetEventListenersArg = {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
-  store: MiddlewareAPI<AppDispatch, RootState>;
+  storeApi: MiddlewareAPI<AppDispatch, RootState>;
   log: Logger<JsonObject>;
 };
 
 export const setEventListeners = (arg: SetEventListenersArg) => {
-  const { socket, store, log } = arg;
-  const { dispatch, getState } = store;
+  const { socket, storeApi, log } = arg;
+  const { dispatch, getState } = storeApi;
 
   /**
    * Connect
