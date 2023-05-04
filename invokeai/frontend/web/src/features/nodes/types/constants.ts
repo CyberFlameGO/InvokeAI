@@ -11,6 +11,7 @@ export const FIELD_TYPE_MAP: Record<string, FieldType> = {
   enum: 'enum',
   ImageField: 'image',
   LatentsField: 'latents',
+  ControlField: 'control',
   model: 'model',
   array: 'array',
 };
@@ -62,6 +63,12 @@ export const FIELDS: Record<FieldType, FieldUIConfig> = {
     colorCssVar: getColorTokenCssVariable('pink'),
     title: 'Latents',
     description: 'Latents may be passed between nodes.',
+  },
+  control: {
+    color: 'cyan',
+    colorCssVar: getColorTokenCssVariable('cyan'), // TODO: no free color left
+    title: 'Control',
+    description: 'Control info passed between nodes.',
   },
   model: {
     color: 'teal',

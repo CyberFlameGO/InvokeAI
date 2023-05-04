@@ -56,6 +56,7 @@ export type FieldType =
   | 'enum'
   | 'image'
   | 'latents'
+  | 'control'
   | 'model'
   | 'array';
 
@@ -74,6 +75,7 @@ export type InputFieldValue =
   | BooleanInputFieldValue
   | ImageInputFieldValue
   | LatentsInputFieldValue
+  | ControlInputFieldValue
   | EnumInputFieldValue
   | ModelInputFieldValue
   | ArrayInputFieldValue;
@@ -91,6 +93,7 @@ export type InputFieldTemplate =
   | BooleanInputFieldTemplate
   | ImageInputFieldTemplate
   | LatentsInputFieldTemplate
+  | ControlInputFieldTemplate
   | EnumInputFieldTemplate
   | ModelInputFieldTemplate
   | ArrayInputFieldTemplate;
@@ -162,6 +165,11 @@ export type LatentsInputFieldValue = FieldValueBase & {
   value?: undefined;
 };
 
+export type ControlInputFieldValue = FieldValueBase & {
+  type: 'control';
+  value?: undefined;
+};
+
 export type ImageInputFieldValue = FieldValueBase & {
   type: 'image';
   value?: Pick<ImageField, 'image_name' | 'image_type'>;
@@ -227,6 +235,11 @@ export type ImageInputFieldTemplate = InputFieldTemplateBase & {
 export type LatentsInputFieldTemplate = InputFieldTemplateBase & {
   default: undefined;
   type: 'latents';
+};
+
+export type ControlInputFieldTemplate = InputFieldTemplateBase & {
+  default: undefined;
+  type: 'control';
 };
 
 export type EnumInputFieldTemplate = InputFieldTemplateBase & {

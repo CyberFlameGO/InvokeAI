@@ -9,6 +9,7 @@ import {
   ImageInputFieldTemplate,
   IntegerInputFieldTemplate,
   LatentsInputFieldTemplate,
+  ControlInputFieldTemplate,
   StringInputFieldTemplate,
   ModelInputFieldTemplate,
   InputFieldTemplateBase,
@@ -196,6 +197,21 @@ const buildLatentsInputFieldTemplate = ({
   return template;
 };
 
+const buildControlInputFieldTemplate = ({
+  schemaObject,
+  baseField,
+}: BuildInputFieldArg): ControlInputFieldTemplate => {
+  const template: ControlInputFieldTemplate = {
+    ...baseField,
+    type: 'control',
+    inputRequirement: 'always',
+    inputKind: 'connection',
+    default: schemaObject.default ?? undefined,
+  };
+
+  return template;
+};
+
 const buildEnumInputFieldTemplate = ({
   schemaObject,
   baseField,
@@ -265,6 +281,9 @@ export const buildInputFieldTemplate = (
   }
   if (['latents'].includes(fieldType)) {
     return buildLatentsInputFieldTemplate({ schemaObject, baseField });
+  }
+  if (['control'].includes(fieldType)) {
+    return buildControlInputFieldTemplate({ schemaObject, baseField });
   }
   if (['model'].includes(fieldType)) {
     return buildModelInputFieldTemplate({ schemaObject, baseField });

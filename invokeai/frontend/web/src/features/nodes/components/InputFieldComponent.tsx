@@ -6,6 +6,10 @@ import BooleanInputFieldComponent from './fields/BooleanInputFieldComponent';
 import EnumInputFieldComponent from './fields/EnumInputFieldComponent';
 import ImageInputFieldComponent from './fields/ImageInputFieldComponent';
 import LatentsInputFieldComponent from './fields/LatentsInputFieldComponent';
+import ConditioningInputFieldComponent from './fields/ConditioningInputFieldComponent';
+import ControlNetInputFieldComponent from './fields/ControlNetInputFieldComponent';
+import ControlInputFieldComponent from './fields/ControlInputFieldComponent';
+
 import ModelInputFieldComponent from './fields/ModelInputFieldComponent';
 import NumberInputFieldComponent from './fields/NumberInputFieldComponent';
 import StringInputFieldComponent from './fields/StringInputFieldComponent';
@@ -77,6 +81,36 @@ const InputFieldComponent = (props: InputFieldComponentProps) => {
   if (type === 'latents' && template.type === 'latents') {
     return (
       <LatentsInputFieldComponent
+        nodeId={nodeId}
+        field={field}
+        template={template}
+      />
+    );
+  }
+
+  if (type === 'conditioning' && template.type === 'conditioning') {
+    return (
+      <ConditioningInputFieldComponent
+        nodeId={nodeId}
+        field={field}
+        template={template}
+      />
+    );
+  }
+
+  if (type === 'controlnet' && template.type === 'controlnet') {
+    return (
+      <ControlNetInputFieldComponent
+        nodeId={nodeId}
+        field={field}
+        template={template}
+      />
+    );
+  }
+
+  if (type === 'control' && template.type === 'control') {
+    return (
+      <ControlInputFieldComponent
         nodeId={nodeId}
         field={field}
         template={template}

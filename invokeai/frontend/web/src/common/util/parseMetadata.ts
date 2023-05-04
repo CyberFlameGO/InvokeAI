@@ -1,5 +1,5 @@
-import { forEach, size } from 'lodash-es';
-import { ImageField, LatentsField } from 'services/api';
+import { forEach, size } from 'lodash';
+import { ImageField, LatentsField, ControlField } from 'services/api';
 
 const OBJECT_TYPESTRING = '[object Object]';
 const STRING_TYPESTRING = '[object String]';
@@ -74,8 +74,37 @@ const parseLatentsField = (latentsField: unknown): LatentsField | undefined => {
   };
 };
 
+const parseControlField = (controlField: unknown): ControlField | undefined => {
+  // Must be an object
+  if (!isObject(controlField)) {
+    return;
+  }
+
+  // A ControlField must have a `control`
+  if (!('control' in controlField)) {
+    return;
+  }
+  console.log(typeof controlField.control);
+  // A ControlField's `controlnets` must be a array
+  // TODO: check type - array of tuples
+  //if (Array.isArray(controlField.control)) {
+  //return;
+  // }
+
+  // Build a valid ControlField
+  return {
+    control: controlField.control,
+  };
+};
+
 type NodeMetadata = {
-  [key: string]: string | number | boolean | ImageField | LatentsField;
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | ImageField
+    | LatentsField
+    | ControlField;
 };
 
 type InvokeAIMetadata = {
@@ -101,7 +130,7 @@ export const parseNodeMetadata = (
       return;
     }
 
-    // the only valid object types are ImageField and LatentsField
+    // the only valid object types are ImageField, LatentsField, ConditioningField, ControlNetField
     if (isObject(nodeItem)) {
       if ('image_name' in nodeItem || 'image_type' in nodeItem) {
         const imageField = parseImageField(nodeItem);
@@ -115,6 +144,14 @@ export const parseNodeMetadata = (
         const latentsField = parseLatentsField(nodeItem);
         if (latentsField) {
           parsed[nodeKey] = latentsField;
+        }
+        return;
+      }
+
+      if ('control' in nodeItem) {
+        const controlField = parseControlField(nodeItem);
+        if (controlField) {
+          parsed[nodeKey] = controlField;
         }
         return;
       }
