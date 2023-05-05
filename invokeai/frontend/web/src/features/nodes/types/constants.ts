@@ -13,6 +13,7 @@ export const FIELD_TYPE_MAP: Record<string, FieldType> = {
   LatentsField: 'latents',
   model: 'model',
   array: 'array',
+  ColorField: 'color',
 };
 
 const COLOR_TOKEN_VALUE = 500;
@@ -74,5 +75,11 @@ export const FIELDS: Record<FieldType, FieldUIConfig> = {
     colorCssVar: getColorTokenCssVariable('gray'),
     title: 'Array',
     description: 'TODO: Array type description.',
+  },
+  color: {
+    color: 'gray',
+    colorCssVar: getColorTokenCssVariable('gray'),
+    title: 'Color',
+    description: 'A RGBA color.',
   },
 };

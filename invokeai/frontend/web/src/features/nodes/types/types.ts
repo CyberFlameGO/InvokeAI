@@ -1,6 +1,9 @@
+import { Image } from 'app/types/invokeai';
 import { OpenAPIV3 } from 'openapi-types';
+import { RgbaColor } from 'react-colorful';
 import { ImageField } from 'services/api';
 import { AnyInvocationType } from 'services/events/types';
+import { O } from 'ts-toolbelt';
 
 export type InvocationValue = {
   id: string;
@@ -57,7 +60,8 @@ export type FieldType =
   | 'image'
   | 'latents'
   | 'model'
-  | 'array';
+  | 'array'
+  | 'color';
 
 /**
  * An input field is persisted across reloads as part of the user's local state.
@@ -76,7 +80,8 @@ export type InputFieldValue =
   | LatentsInputFieldValue
   | EnumInputFieldValue
   | ModelInputFieldValue
-  | ArrayInputFieldValue;
+  | ArrayInputFieldValue
+  | ColorInputFieldValue;
 
 /**
  * An input field template is generated on each page load from the OpenAPI schema.
@@ -93,7 +98,8 @@ export type InputFieldTemplate =
   | LatentsInputFieldTemplate
   | EnumInputFieldTemplate
   | ModelInputFieldTemplate
-  | ArrayInputFieldTemplate;
+  | ArrayInputFieldTemplate
+  | ColorInputFieldTemplate;
 
 /**
  * An output field is persisted across as part of the user's local state.
@@ -177,6 +183,11 @@ export type ArrayInputFieldValue = FieldValueBase & {
   value?: (string | number)[];
 };
 
+export type ColorInputFieldValue = FieldValueBase & {
+  type: 'color';
+  value?: RgbaColor;
+};
+
 export type InputFieldTemplateBase = {
   name: string;
   title: string;
@@ -225,7 +236,7 @@ export type ImageInputFieldTemplate = InputFieldTemplateBase & {
 };
 
 export type LatentsInputFieldTemplate = InputFieldTemplateBase & {
-  default: undefined;
+  default: string;
   type: 'latents';
 };
 
@@ -244,6 +255,11 @@ export type ModelInputFieldTemplate = InputFieldTemplateBase & {
 export type ArrayInputFieldTemplate = InputFieldTemplateBase & {
   default: (string | number)[];
   type: 'array';
+};
+
+export type ColorInputFieldTemplate = InputFieldTemplateBase & {
+  default: RgbaColor;
+  type: 'color';
 };
 
 /**

@@ -15,6 +15,7 @@ import {
   OutputFieldTemplate,
   TypeHints,
   FieldType,
+  ColorInputFieldTemplate,
 } from '../types/types';
 
 export type BaseFieldProperties = 'name' | 'title' | 'description';
@@ -214,6 +215,21 @@ const buildEnumInputFieldTemplate = ({
   return template;
 };
 
+const buildColorInputFieldTemplate = ({
+  schemaObject,
+  baseField,
+}: BuildInputFieldArg): ColorInputFieldTemplate => {
+  const template: ColorInputFieldTemplate = {
+    ...baseField,
+    type: 'color',
+    inputRequirement: 'always',
+    inputKind: 'direct',
+    default: schemaObject.default ?? { r: 127, g: 127, b: 127, a: 255 },
+  };
+
+  return template;
+};
+
 export const getFieldType = (
   schemaObject: OpenAPIV3.SchemaObject,
   name: string,
@@ -283,6 +299,9 @@ export const buildInputFieldTemplate = (
   }
   if (['boolean'].includes(fieldType)) {
     return buildBooleanInputFieldTemplate({ schemaObject, baseField });
+  }
+  if (['color'].includes(fieldType)) {
+    return buildColorInputFieldTemplate({ schemaObject, baseField });
   }
 
   return;

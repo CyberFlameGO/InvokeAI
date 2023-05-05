@@ -9,6 +9,7 @@ import LatentsInputFieldComponent from './fields/LatentsInputFieldComponent';
 import ModelInputFieldComponent from './fields/ModelInputFieldComponent';
 import NumberInputFieldComponent from './fields/NumberInputFieldComponent';
 import StringInputFieldComponent from './fields/StringInputFieldComponent';
+import ColorInputFieldComponent from './fields/ColorInputFieldComponent';
 
 type InputFieldComponentProps = {
   nodeId: string;
@@ -97,6 +98,16 @@ const InputFieldComponent = (props: InputFieldComponentProps) => {
   if (type === 'array' && template.type === 'array') {
     return (
       <ArrayInputFieldComponent
+        nodeId={nodeId}
+        field={field}
+        template={template}
+      />
+    );
+  }
+
+  if (type === 'color' && template.type === 'color') {
+    return (
+      <ColorInputFieldComponent
         nodeId={nodeId}
         field={field}
         template={template}
